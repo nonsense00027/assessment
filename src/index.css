@@ -8,11 +8,11 @@
   }
 
   .form-row {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-1 w-full py-2;
   }
 
   .text-input {
-    @apply border w-80 px-2 py-1 rounded-sm;
+    @apply border w-full px-2 py-1 rounded-sm;
   }
 }
 

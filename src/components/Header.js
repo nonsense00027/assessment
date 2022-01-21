@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Header() {
   const navigate = useNavigate();
+  const { user, logout } = useAuthContext();
 
   return (
     <div className="w-screen bg-white mx-auto h-20 flex items-center justify-center fixed top-0 left-0 z-50">
@@ -40,12 +42,25 @@ function Header() {
           >
             Get License
           </button>
-          <button
-            className="bg-white px-4 py-2 rounded-sm border"
-            onClick={() => navigate("/login")}
-          >
-            Signin Admin
-          </button>
+          {user ? (
+            <button
+              className="bg-white px-4 py-2 rounded-sm border"
+              onClick={() => {
+                logout();
+                navigate("/");
+                window.location.reload();
+              }}
+            >
+              Signout
+            </button>
+          ) : (
+            <button
+              className="bg-white px-4 py-2 rounded-sm border"
+              onClick={() => navigate("/login")}
+            >
+              Signin Admin
+            </button>
+          )}
         </div>
       </div>
     </div>

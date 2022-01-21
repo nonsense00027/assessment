@@ -13,15 +13,22 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
 
 function Sidebar() {
+  const navigate = useNavigate();
   const { logout } = useAuthContext();
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
     setCollapsed((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -40,13 +47,21 @@ function Sidebar() {
         className="h-full"
         inlineCollapsed={collapsed}
       >
-        <Menu.Item key="/" icon={<CalendarOutlined />}>
+        <Menu.Item
+          key="/"
+          icon={<CalendarOutlined />}
+          onClick={() => navigate("/")}
+        >
           Applications
         </Menu.Item>
-        <Menu.Item key="/users" icon={<UserOutlined />}>
+        <Menu.Item
+          key="/users"
+          icon={<UserOutlined />}
+          onClick={() => navigate("/users")}
+        >
           Users
         </Menu.Item>
-        <Menu.Item key="2" icon={<LogoutOutlined />} onClick={logout}>
+        <Menu.Item key="2" icon={<LogoutOutlined />} onClick={handleLogout}>
           Logout
         </Menu.Item>
       </Menu>

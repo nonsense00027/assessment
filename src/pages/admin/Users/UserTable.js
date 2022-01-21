@@ -5,7 +5,7 @@ import { doc, updateDoc } from "@firebase/firestore";
 import { db } from "../../../shared/firebase";
 import { useNavigate } from "react-router-dom";
 
-function ApplicationTable({ data }) {
+function UserTable({ data }) {
   const navigate = useNavigate();
   const updateUser = (id, category) => {
     console.log("id: ", id);
@@ -40,15 +40,9 @@ function ApplicationTable({ data }) {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => navigate(`user/${record.id}`)}>
+          {/* <Button type="primary" onClick={() => navigate(`user/${record.id}`)}>
             View
-          </Button>
-          <Button type="primary" onClick={() => updateUser(record.id, true)}>
-            Accept
-          </Button>
-          <Button danger onClick={() => updateUser(record.id, false)}>
-            Delete
-          </Button>
+          </Button> */}
         </Space>
       ),
     },
@@ -60,4 +54,4 @@ function ApplicationTable({ data }) {
   );
 }
 
-export default ApplicationTable;
+export default UserTable;

@@ -14,6 +14,8 @@ import Dashboard from "./pages/admin/Dashboard";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import Application from "./pages/Application";
 import Technology from "./pages/Technology";
+import User from "./pages/admin/User";
+import Users from "./pages/admin/Users";
 
 function App() {
   const { user, loading } = useAuthContext();
@@ -23,7 +25,16 @@ function App() {
   }
   return (
     <div className="App">
-      {!user ? (
+      {user && user.role === "admin" ? (
+        <Router>
+          <Routes>
+            <Route path="/users" element={<Users />} />
+            <Route path="/user/:id" element={<User />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
+      ) : (
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -32,13 +43,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/" element={<Landing />} />
-          </Routes>
-        </Router>
-      ) : (
-        <Router>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Router>
       )}

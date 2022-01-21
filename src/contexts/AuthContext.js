@@ -10,7 +10,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "../shared/firebase";
+import { auth, db } from "../shared/firebase";
+import { doc, onSnapshot } from "@firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -22,8 +23,10 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
-        setLoading(false);
+        onSnapshot(doc(db, "users", user.uid), (doc) => {
+          setUser({ ...doc.data(), id: user.uid });
+          setLoading(false);
+        });
       } else {
         setUser(null);
         setLoading(false);
